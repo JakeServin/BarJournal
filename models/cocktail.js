@@ -34,7 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     citrus: DataTypes.INTEGER,
     sweetener: DataTypes.INTEGER,
     shake: DataTypes.STRING,
-    creatorId: DataTypes.INTEGER
+    creatorId: DataTypes.INTEGER,
+    description: DataTypes.STRING,
+    url: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Cocktail',

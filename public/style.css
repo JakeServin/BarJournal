@@ -1,4 +1,17 @@
-* {
+.main-screen {
     font-family: 'Roboto';
+    background-color: white;
+    height: 100vh;
+}
+ 
+
+#wrapper {
+    padding-top: 10%;
+    display:flex;
+    justify-content: center;
+    text-align: ;
+}
+#container {
     background-color: whitesmoke;
+    border-radius: 5px;
 }
