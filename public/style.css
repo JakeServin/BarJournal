@@ -15,3 +15,10 @@
     background-color: whitesmoke;
     border-radius: 5px;
 }
+
+#feed {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
+}
