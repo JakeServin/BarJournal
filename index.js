@@ -20,10 +20,18 @@ app.set('view engine', 'html'); // the engine we set up on line 15 will be used 
 
 // ROUTING
 /* Get Routes */
+
 app.get('/home', async (req, res) => {
+    res.render('index', {
+        partials: {
+            navbar: './templates/partials/nav.html'
+        }
+    })
+})
+app.get('/new-cocktail', async (req, res) => {
     const ingredients = await Ingredient.findAll({raw:true});
     console.log(ingredients);
-    res.render('index', {
+    res.render('newcocktail', {
         locals: {
             ingredients: ingredients
         }
@@ -64,18 +72,23 @@ app.post('/users', async (req, res) => {
     res.json(newUser);
 })
 app.post('/cocktails', async (req, res) => {
-    const { name, spirit, citrus, sweetener, shake, creatorId } = req.body;
+    const { name, spirit, citrus, sweetener, shake, creatorId, description, url } = req.body;
     const newCocktail = await Cocktail.create({
         name,
         spirit,
         citrus,
         sweetener,
         shake,
-        creatorId
+        creatorId,
+        description,
+        url
     })
     res.json(newCocktail);
 })
 
 
-app.listen(PORT, console.log(`Server is listening on port: ${PORT}`));
+app.listen(
+	PORT,
+	console.log(`Server is listening on port: ${PORT}`)
+);
 
