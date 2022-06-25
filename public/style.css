@@ -1,3 +1,4 @@
+
 .main-screen {
     font-family: 'Roboto';
     background-color: white;
@@ -21,4 +22,17 @@
     justify-content: center;
     align-items: center;
     
+}
+.drink-wrapper {
+    background-color: whitesmoke;
+    border-radius:5px;
+    margin-bottom: 5%;
+}
+
+.drink-image {
+    text-align: center;
+}
+.drink-description {
+    display: flex;
+    justify-content: center;
 }
