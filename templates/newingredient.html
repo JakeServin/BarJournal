@@ -30,18 +30,8 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-      const enterButton = document.getElementById('enter-button');
-      const ingredient = document.getElementById('ingredient-name').value
-      
-      enterButton.addEventListener('click', ()=>{ 
-        name = document.getElementById('ingredient-name').value
-        console.log(name)
-        axios.post('/ingredients', {
-          "name": `${name}`
-        })
-        console.log(document.getElementById('ingredient-name').value)
-      })
+    <script src="/public/script.js">
+
     </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
