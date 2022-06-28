@@ -28,18 +28,24 @@ module.exports = (sequelize, DataTypes) => {
       })
     }
   }
-  Cocktail.init({
-    name: DataTypes.STRING,
-    spirit: DataTypes.INTEGER,
-    citrus: DataTypes.INTEGER,
-    sweetener: DataTypes.INTEGER,
-    shake: DataTypes.STRING,
-    creatorId: DataTypes.INTEGER,
-    description: DataTypes.STRING,
-    url: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Cocktail',
-  });
+  Cocktail.init(
+		{
+			name: DataTypes.STRING,
+			spirit: DataTypes.INTEGER,
+			citrus: DataTypes.INTEGER,
+			sweetener: DataTypes.INTEGER,
+			shake: DataTypes.STRING,
+			creatorId: DataTypes.INTEGER,
+			description: DataTypes.STRING,
+			url: DataTypes.STRING,
+			spiritAmount: DataTypes.STRING,
+			citrusAmount: DataTypes.STRING,
+			sweetenerAmount: DataTypes.STRING,
+		},
+		{
+			sequelize,
+			modelName: "Cocktail",
+		}
+  );
   return Cocktail;
 };

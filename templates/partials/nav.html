@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="#">Cocktail Share</a>
+<nav id="navbar" class="navbar sticky-top navbar-expand-sm navbar-light bg-light">
+        <a class="navbar-brand" href="#">BarBook</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -13,16 +13,19 @@
                     <a class="nav-link" href="#">My Cocktails</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add new</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownId">
                         <a class="dropdown-item" href="/new-cocktail">Cocktail</a>
                         <a class="dropdown-item" href="/new-ingredient">Ingredient</a>
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GET Requests</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownId">
+                        <a class="dropdown-item" href="/cocktails">Cocktails</a>
+                        <a class="dropdown-item" href="/ingredients">Ingredients</a>
+                    </div>
+                </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
         </div>
     </nav>

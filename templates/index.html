@@ -9,14 +9,14 @@
 			href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap"
 			rel="stylesheet"
 		/>
-    <link rel="stylesheet" href="../public/style.css" />
+    <link rel="stylesheet" href="style.css" />
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
     <nav id="navbar" class="navbar sticky-top navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="#">BarBook</a>
+        <a class="navbar-brand" href="/home">BarBook</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -30,10 +30,17 @@
                     <a class="nav-link" href="#">My Cocktails</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add new</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownId">
                         <a class="dropdown-item" href="/new-cocktail">Cocktail</a>
                         <a class="dropdown-item" href="/new-ingredient">Ingredient</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GET Requests</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownId">
+                        <a class="dropdown-item" href="/cocktails">Cocktails</a>
+                        <a class="dropdown-item" href="/ingredients">Ingredients</a>
                     </div>
                 </li>
             </ul>
@@ -41,114 +48,41 @@
     </nav>
     <div class="container-fluid">
         <div class="row position-fixed">
-            <div class="co m-4"><h1>Your feed</h1></div>
+            <div class="co my-3 mx-4 "><h1>Your feed</h1></div>
         </div>
         <div id="feed" class="row">
             <div id="feed-content" class="col-7">
-                <div class="drink-wrapper col p-3">
+                ${
+                    cocktails.map((cocktail)=>{
+                        return `<div class="drink-wrapper col p-3">
                     <div class="drink-title">
-                    <h3>Old Fashioned</h3>
+                    <h3>${cocktail.name}</h3>
                     </div>
                     <div class="drink-image">
-                        <img width="50%" src="https://www.liquor.com/thmb/_0WLXSRV03SfpWgZ1hwiAkyIrzE=/720x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__liquor__2018__05__08113350__bourbon-old-fashioned-720x720-recipe-ade6f7780c304999be3577e565c9bcdd.jpg" alt="">
+                        <img width="50%" src="${cocktail.url}" alt="">
                     </div>
                     <div class="drink-specs">
-                        <div class="spirit"><strong>Spirit: </strong><span>Bourbon</span></div>
-                        <div class="citrus"><strong>Citrus: </strong><span>Orange Twist</span></div>
-                        <div class="sweetener"><strong>Sweetener: </strong><span>Simple Syrup</span></div>
-                        <div class="shake"><strong>Shake: </strong><span>Stirred</span></div>
+                        <div class="spirit"><strong>Spirit: </strong><span>${cocktail.spiritAmount}oz ${ingredients.find(ingredient => cocktail.spirit === ingredient.id).name}</span></div>
+                        <div class="citrus"><strong>Citrus: </strong><span>${cocktail.citrusAmount}oz ${ingredients.find(ingredient => cocktail.citrus === ingredient.id).name}</span></div>
+                        <div class="sweetener"><strong>Sweetener: </strong><span>${cocktail.sweetenerAmount}oz ${ingredients.find(ingredient => cocktail.sweetener === ingredient.id).name}</span></div>
+                        <div class="shake"><strong>Shake: </strong><span>${cocktail.shake}</span></div>
                         <div class="drink-instructions">
                             <div><strong>Instructions:</strong></div>
-                            <p class="">Add the sugar and bitters to a rocks glass, then add the water, and stir until the sugar is nearly dissolved.  Fill the glass with large ice cubes, add the bourbon, and gently stir to combine.  Express the oil of an orange peel over the glass, then drop in.</p>
+                            <p class="">${cocktail.description}</p>
                         </div>
 
                         
                     </div>
                 </div>
-                <div class="drink-wrapper col p-3">
-                    <div class="drink-title">
-                    <h3>Old Fashioned</h3>
-                    </div>
-                    <div class="drink-image">
-                        <img width="50%" src="https://www.liquor.com/thmb/_0WLXSRV03SfpWgZ1hwiAkyIrzE=/720x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__liquor__2018__05__08113350__bourbon-old-fashioned-720x720-recipe-ade6f7780c304999be3577e565c9bcdd.jpg" alt="">
-                    </div>
-                    <div class="drink-specs">
-                        <div class="spirit"><strong>Spirit: </strong><span>Bourbon</span></div>
-                        <div class="citrus"><strong>Citrus: </strong><span>Orange Twist</span></div>
-                        <div class="sweetener"><strong>Sweetener: </strong><span>Simple Syrup</span></div>
-                        <div class="shake"><strong>Shake: </strong><span>Stirred</span></div>
-                        <div class="drink-instructions">
-                            <div><strong>Instructions:</strong></div>
-                            <p class="">Add the sugar and bitters to a rocks glass, then add the water, and stir until the sugar is nearly dissolved.  Fill the glass with large ice cubes, add the bourbon, and gently stir to combine.  Express the oil of an orange peel over the glass, then drop in.</p>
-                        </div>
-
-                        
-                    </div>
-                </div>
-                <div class="drink-wrapper col p-3">
-                    <div class="drink-title">
-                    <h3>Old Fashioned</h3>
-                    </div>
-                    <div class="drink-image">
-                        <img width="50%" src="https://www.liquor.com/thmb/_0WLXSRV03SfpWgZ1hwiAkyIrzE=/720x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__liquor__2018__05__08113350__bourbon-old-fashioned-720x720-recipe-ade6f7780c304999be3577e565c9bcdd.jpg" alt="">
-                    </div>
-                    <div class="drink-specs">
-                        <div class="spirit"><strong>Spirit: </strong><span>Bourbon</span></div>
-                        <div class="citrus"><strong>Citrus: </strong><span>Orange Twist</span></div>
-                        <div class="sweetener"><strong>Sweetener: </strong><span>Simple Syrup</span></div>
-                        <div class="shake"><strong>Shake: </strong><span>Stirred</span></div>
-                        <div class="drink-instructions">
-                            <div><strong>Instructions:</strong></div>
-                            <p class="">Add the sugar and bitters to a rocks glass, then add the water, and stir until the sugar is nearly dissolved.  Fill the glass with large ice cubes, add the bourbon, and gently stir to combine.  Express the oil of an orange peel over the glass, then drop in.</p>
-                        </div>
-
-                        
-                    </div>
-                </div>
-                <div class="drink-wrapper col p-3">
-                    <div class="drink-title">
-                    <h3>Old Fashioned</h3>
-                    </div>
-                    <div class="drink-image">
-                        <img width="50%" src="https://www.liquor.com/thmb/_0WLXSRV03SfpWgZ1hwiAkyIrzE=/720x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__liquor__2018__05__08113350__bourbon-old-fashioned-720x720-recipe-ade6f7780c304999be3577e565c9bcdd.jpg" alt="">
-                    </div>
-                    <div class="drink-specs">
-                        <div class="spirit"><strong>Spirit: </strong><span>Bourbon</span></div>
-                        <div class="citrus"><strong>Citrus: </strong><span>Orange Twist</span></div>
-                        <div class="sweetener"><strong>Sweetener: </strong><span>Simple Syrup</span></div>
-                        <div class="shake"><strong>Shake: </strong><span>Stirred</span></div>
-                        <div class="drink-instructions">
-                            <div><strong>Instructions:</strong></div>
-                            <p class="">Add the sugar and bitters to a rocks glass, then add the water, and stir until the sugar is nearly dissolved.  Fill the glass with large ice cubes, add the bourbon, and gently stir to combine.  Express the oil of an orange peel over the glass, then drop in.</p>
-                        </div>
-
-                        
-                    </div>
-                </div>
-                <div class="drink-wrapper col p-3">
-                    <div class="drink-title">
-                    <h3>Old Fashioned</h3>
-                    </div>
-                    <div class="drink-image">
-                        <img width="50%" src="https://www.liquor.com/thmb/_0WLXSRV03SfpWgZ1hwiAkyIrzE=/720x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__liquor__2018__05__08113350__bourbon-old-fashioned-720x720-recipe-ade6f7780c304999be3577e565c9bcdd.jpg" alt="">
-                    </div>
-                    <div class="drink-specs">
-                        <div class="spirit"><strong>Spirit: </strong><span>Bourbon</span></div>
-                        <div class="citrus"><strong>Citrus: </strong><span>Orange Twist</span></div>
-                        <div class="sweetener"><strong>Sweetener: </strong><span>Simple Syrup</span></div>
-                        <div class="shake"><strong>Shake: </strong><span>Stirred</span></div>
-                        <div class="drink-instructions">
-                            <div><strong>Instructions:</strong></div>
-                            <p class="">Add the sugar and bitters to a rocks glass, then add the water, and stir until the sugar is nearly dissolved.  Fill the glass with large ice cubes, add the bourbon, and gently stir to combine.  Express the oil of an orange peel over the glass, then drop in.</p>
-                        </div>
-
-                        
-                    </div>
-                </div>
+                        `}).join('')}
+                
             </div>
         </div>
     </div>
-      
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+    
+    </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

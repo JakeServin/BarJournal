@@ -22,18 +22,25 @@ app.set('view engine', 'html'); // the engine we set up on line 15 will be used 
 /* Get Routes */
 
 app.get('/home', async (req, res) => {
+    const cocktails = await Cocktail.findAll({ raw: true });
+    const ingredients = await Ingredient.findAll({ raw: true });
     res.render('index', {
+        locals: {
+            cocktails: cocktails,
+            ingredients: ingredients
+        },
         partials: {
             navbar: './templates/partials/nav.html'
         }
     })
 })
 app.get('/new-cocktail', async (req, res) => {
-    const ingredients = await Ingredient.findAll({raw:true});
-    console.log(ingredients);
+    const ingredients = await Ingredient.findAll({ raw: true });
+    const cocktails = await Cocktail.findAll({ raw: true });
     res.render('newcocktail', {
         locals: {
-            ingredients: ingredients
+            ingredients: ingredients,
+            cocktails: cocktails
         }
     })
 })
@@ -72,7 +79,7 @@ app.post('/users', async (req, res) => {
     res.json(newUser);
 })
 app.post('/cocktails', async (req, res) => {
-    const { name, spirit, citrus, sweetener, shake, creatorId, description, url } = req.body;
+    const { name, spirit, citrus, sweetener, shake, creatorId, description, url, spiritAmount, citrusAmount, sweetenerAmount } = req.body;
     const newCocktail = await Cocktail.create({
         name,
         spirit,
@@ -81,7 +88,10 @@ app.post('/cocktails', async (req, res) => {
         shake,
         creatorId,
         description,
-        url
+        url,
+        spiritAmount,
+        citrusAmount,
+        sweetenerAmount
     })
     res.json(newCocktail);
 })
