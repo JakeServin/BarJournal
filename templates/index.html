@@ -16,7 +16,7 @@
   </head>
   <body>
     <nav id="navbar" class="navbar sticky-top navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="/home">BarBook</a>
+        <a class="navbar-brand" href="/home">BarJournal</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -48,12 +48,12 @@
     </nav>
     <div class="container-fluid">
         <div class="row position-fixed">
-            <div class="co my-3 mx-4 "><h1>Your feed</h1></div>
+            <div class="co my-3 mx-4 "><h2>New Cocktails</h2></div>
         </div>
         <div id="feed" class="row">
             <div id="feed-content" class="col-7">
                 ${
-                    cocktails.map((cocktail)=>{
+                    cocktails.reverse().map((cocktail)=>{
                         return `<div class="drink-wrapper col p-3">
                     <div class="drink-title">
                     <h3>${cocktail.name}</h3>
