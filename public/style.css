@@ -7,7 +7,8 @@
  
 
 #wrapper {
-    padding-top: 10%;
+    padding-top: 5%;
+    padding-bottom: 5%;
     display:flex;
     justify-content: center;
     text-align: ;
@@ -36,4 +37,8 @@
 .drink-description {
     display: flex;
     justify-content: center;
+}
+
+.text-success {
+    font-size: 1.5rem;
 }

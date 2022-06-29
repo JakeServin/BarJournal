@@ -8,7 +8,7 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1, shrink-to-fit=no"
 		/>
-		<link rel="stylesheet" href="/style.css" />
+		<link rel="stylesheet" href="style.css" />
 		<!-- Bootstrap CSS -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -58,8 +58,9 @@
 		<div class="main-screen">
 			<div class="container-fluid">
 				<div id="wrapper" class="row">
-					<div id="container" class="col-lg-6 p-3">
+					<div id="container" class="col-lg-6 p-3" >
 						<h1>Create New Cocktail</h1>
+						<div id="form" >
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span
@@ -77,49 +78,50 @@
 							/>
 							<br>
 						</div>
-						<!-- <div class="text-danger">A cocktail already exists with this name!</div> -->
+						<div id="name-error" class="text-danger m-3"></div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span
-									class="input-group-text"
-									id="inputGroup-sizing-default"
-									>Image URL</span
+								class="input-group-text"
+								id="inputGroup-sizing-default"
+								>Image URL</span
 								>
 							</div>
 							<input
-								id="img-url"
-								type="text"
-								class="form-control"
-								aria-label="Default"
-								aria-describedby="inputGroup-sizing-default"
+							id="img-url"
+							type="text"
+							class="form-control"
+							aria-label="Default"
+							aria-describedby="inputGroup-sizing-default"
 							/>
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<label
-									class="input-group-text"
-									for="inputGroupSelect01"
-									>Spirit</label
+								class="input-group-text"
+								for="inputGroupSelect01"
+								>Spirit</label
 								>
 							</div>
 							<select class="custom-select" id="spirit">
-								<option selected>Choose...</option>
+								<option  selected>Choose...</option>
 								${ ingredients.map(ingredient => { return `
-								<option value=${ingredient.id}>
-									${ingredient.name}
-								</option>
-								` }).join('') }
-							</select>
-							<input type="text" class="form-control"id="spirit-amount" />
-							<div class="input-group-append">
-								<span class="input-group-text" id="basic-addon2"
+									<option value=${ingredient.id}>
+										${ingredient.name}
+									</option>
+									` }).join('') }
+								</select>
+								<input type="text" class="form-control"id="spirit-amount" />
+								<div class="input-group-append">
+									<span class="input-group-text" id="basic-addon2"
 									>oz</span
-								>
+									>
+								</div>
 							</div>
-						</div>
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<label
+							<div id="spirit-error" class="text-danger m-3"></div>
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<label
 									class="input-group-text"
 									for="inputGroupSelect01"
 									>Citrus</label
@@ -172,7 +174,7 @@
 								>
 							</div>
 							<select class="custom-select" id="shake">
-								<option selected>Choose...</option>
+								<option value=null selected>Choose...</option>
 								<option value="Hard Shake">Hard Shake</option>
 								<option value="Quick Shake">Quick Shake</option>
 								<option value="Whip Shake">Whip Shake</option>
@@ -189,6 +191,7 @@
 								rows="3"
 							></textarea>
 						</div>
+						<div id="description-error" class="text-danger m-3"></div>
 						<a
 							href="/new-ingredient"
 							role="button"
@@ -203,6 +206,10 @@
 						>
 							Submit
 						</button>
+						</div>
+						<div id="success" class="m-4 ml-5" style="display:none">
+							<p class="text-success">Drink added successfully!</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -212,7 +219,12 @@
 		<script>
 			const submit = document.getElementById("submit-btn");
 			submit.addEventListener("click", async () => {
+				// Reset error messages
+				document.getElementById('name-error').innerText = '';
+				document.getElementById('spirit-error').innerText = '';
+				document.getElementById('description-error').innerText = '';
 				
+
 				// Get details from form
 				const newCocktail = {
 					name: document.getElementById("drink-name").value,
@@ -228,32 +240,45 @@
 					sweetenerAmount: document.getElementById("sweetener-amount").value,
 					
 				};
-				console.log(newCocktail);
-				if (newCocktail.name == '' || newCocktail.spirit== '' || newCocktail.citrus== '' || newCocktail.sweetener== '' || shake== '' || newCocktail.description== '' || newCocktail.url== '' || newCocktail.spiritAmount== '' || newCocktail.citrusAmount== '' || newCocktail.sweetenerAmount == '') {
-					console.log("INVALID ENTRY");
-					return;
-				}
-				
 				// Check if cocktail exists under that name already 
 				let alreadyExists; 
 				await axios('/cocktails').then((res)=> {
 					res.data.find((cocktail)=> {
 						if (cocktail.name == newCocktail.name){
-							console.log("ALRESDY EXISTS")
 							alreadyExists = true;
 						}
 					})
 				})
 				if (alreadyExists == true) {
+					document.getElementById('name-error').innerText = 'A cocktail already exists under this name!'
 					return ;
 				} else {
+				
+				// Check if name field is filled out
+				if (!newCocktail.name ) {
+					document.getElementById('name-error').innerText = 'This field must be filled out';
+				}
+				
+				// Check if spirit field is filled out
+				if (!newCocktail.spirit || !newCocktail.spiritAmount ) {
+					document.getElementById('spirit-error').innerText = 'This field must be filled out';
+				}
+
+				// Check if description is filled out
+				if (!newCocktail.description ) {
+					document.getElementById('description-error').innerText = 'This field must be filled out';
+				}
+
+				// Don't post data if required fields are empty
+				if (newCocktail.name == '' || newCocktail.spirit== '' || newCocktail.description== '' || newCocktail.spiritAmount== '') {
+					console.log("INVALID ENTRY");
+				}
+				
 
 				await axios.post("/cocktails", newCocktail)
-                /* .then((data)=>{
-                    console.log("In here")
-                }).catch(err =>{
-                    throw new Error(err)
-                }); */
+				document.getElementById('form').style.display ='none';
+				document.getElementById('success').style.display ='';
+
 				}
 				
 			});
