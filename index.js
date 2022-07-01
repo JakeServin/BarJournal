@@ -5,10 +5,118 @@ const app = express();
 const PORT = 3000;
 const { User, Cocktail, Ingredient } = require('./models');
 const axios = require('axios');
+const LocalStrategy = require('passport-local').Strategy;
+const crypto = require('crypto');
+const passport = require('passport');
+const session = require('express-session');
+const bCrypt = require('bcrypt-nodejs')
+
+
+
+
 // Middleware
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(
+	session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
+); // session secret
+
+app.use(passport.initialize());
+
+app.use(passport.session()); 
+
+passport.serializeUser(function (user, done) {
+	done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+	User.findByPk(id).then(function (user) {
+		if (user) {
+			done(null, user.get());
+		} else {
+			done(user.errors, null);
+		}
+	});
+});
+
+passport.use('local-signup', new LocalStrategy(
+        {
+ 
+            usernameField: 'name',
+ 
+            passwordField: 'password',
+ 
+            passReqToCallback: true // allows us to pass back the entire request to the callback
+ 
+    },
+    
+ 
+ 
+    function (req, name, password, done) {
+ 
+            var generateHash = function(password) {
+ 
+                return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
+ 
+            };
+ 
+ 
+ 
+            User.findOne({
+                where: {
+                    name: name
+                }
+            }).then(function(user) {
+ 
+                if (user)
+ 
+                {
+ 
+                    return done(null, false, {
+                        message: 'That email is already taken'
+                    });
+ 
+                } else
+ 
+                {
+ 
+                    var userPassword = generateHash(password);
+ 
+                    var data =
+ 
+                        {
+                            name: req.body.name,
+ 
+                            password: userPassword,
+ 
+                        };
+ 
+                    User.create(data).then(function(newUser, created) {
+ 
+                        if (!newUser) {
+ 
+                            return done(null, false);
+ 
+                        }
+ 
+                        if (newUser) {
+ 
+                            return done(null, newUser);
+ 
+                        }
+ 
+                    });
+ 
+                }
+ 
+            });
+ 
+        }
+ 
+    ));
+
+
 
 // express-es6-template-engine set up
 app.engine('html', es6Renderer); // Registers HTML as the engine (this is what type of view will be rendering. )
@@ -95,6 +203,15 @@ app.post('/cocktails', async (req, res) => {
     })
     res.json(newCocktail);
 })
+
+app.post(
+	"/signup",
+	passport.authenticate("local-signup", {
+		successRedirect: "/cocktails",
+
+		failureRedirect: "/ingredients",
+	})
+);
 
 
 app.listen(
