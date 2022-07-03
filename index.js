@@ -2,7 +2,7 @@
 const es6Renderer = require("express-es6-template-engine");
 const express = require('express');
 const app = express();
-const PORT = 3000;
+const PORT = 4000;
 const { User, Cocktail, Ingredient } = require('./models');
 const axios = require('axios');
 const LocalStrategy = require('passport-local').Strategy;
@@ -25,6 +25,10 @@ app.use(
 app.use(passport.initialize());
 
 app.use(passport.session()); 
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500).send("Something broke!");
+});
 
 passport.serializeUser(function (user, done) {
 	done(null, user.id);
@@ -40,12 +44,64 @@ passport.deserializeUser(function (id, done) {
 	});
 });
 
+passport.use(
+	"local-signin",
+	new LocalStrategy(
+		{
+			// by default, local strategy uses username and password, we will override with email
+
+			usernameField: "name",
+
+			passwordField: "password",
+
+			passReqToCallback: true, // allows us to pass back the entire request to the callback
+		},
+
+		function (req, name, password, done) {
+
+			var isValidPassword = function (userpass, password) {
+				return bCrypt.compareSync(password, userpass);
+			};
+
+			User.findOne({
+				where: {
+					name: name,
+				},
+			})
+				.then(function (user) {
+					if (!user) {
+						return done(null, false, {
+							message: "Username does not exist",
+						});
+					}
+
+					if (!isValidPassword(user.password, password)) {
+						return done(null, false, {
+							message: "Incorrect password.",
+						});
+					}
+
+					var userinfo = user.get();
+					return done(null, userinfo);
+				})
+				.catch(function (err) {
+					console.log("Error:", err);
+
+					return done(null, false, {
+						message: "Something went wrong with your Signin",
+					});
+				});
+		}
+	)
+);
+
 passport.use('local-signup', new LocalStrategy(
         {
  
             usernameField: 'name',
  
-            passwordField: 'password',
+        passwordField: 'password',
+            
  
             passReqToCallback: true // allows us to pass back the entire request to the callback
  
@@ -56,7 +112,7 @@ passport.use('local-signup', new LocalStrategy(
     function (req, name, password, done) {
  
             var generateHash = function(password) {
- 
+                console.log(password)
                 return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
  
             };
@@ -83,14 +139,13 @@ passport.use('local-signup', new LocalStrategy(
  
                     var userPassword = generateHash(password);
  
-                    var data =
- 
-                        {
-                            name: req.body.name,
- 
-                            password: userPassword,
- 
-                        };
+                    var data = {
+						name: req.body.name,
+
+						password: userPassword,
+
+						email: req.body.email,
+					};
  
                     User.create(data).then(function(newUser, created) {
  
@@ -129,12 +184,22 @@ app.set('view engine', 'html'); // the engine we set up on line 15 will be used 
 // ROUTING
 /* Get Routes */
 
-app.get('/home', async (req, res) => {
+app.get('/',function isLoggedIn(req, res, next) {
+ 
+    if (req.isAuthenticated())
+     
+        return next();
+         
+    res.redirect('/signin');
+ 
+}, async (req, res) => {
     const cocktails = await Cocktail.findAll({ raw: true });
     const ingredients = await Ingredient.findAll({ raw: true });
+    const users = await User.findAll({ raw: true });
     res.render('index', {
         locals: {
             cocktails: cocktails,
+            users: users,
             ingredients: ingredients
         },
         partials: {
@@ -170,6 +235,18 @@ app.get('/ingredients', async (req, res) => {
     res.json(ingredients);
 });
 
+app.get('/signup', async (req, res) => {
+    res.render('signup')
+})
+app.get('/signin', async (req, res) => {
+    res.render('signin')
+})
+app.get('/logout', (req, res) => {
+    req.session.destroy(function (err) {
+        res.redirect('/')
+    })
+})
+
 /* Post Routes */
 app.post('/ingredients', async (req, res) => {
     const { name } = req.body;
@@ -187,7 +264,9 @@ app.post('/users', async (req, res) => {
     res.json(newUser);
 })
 app.post('/cocktails', async (req, res) => {
-    const { name, spirit, citrus, sweetener, shake, creatorId, description, url, spiritAmount, citrusAmount, sweetenerAmount } = req.body;
+    const { name, spirit, citrus, sweetener, shake, description, url, spiritAmount, citrusAmount, sweetenerAmount } = req.body;
+    console.log(req.user)
+    const creatorId = req.user.id
     const newCocktail = await Cocktail.create({
         name,
         spirit,
@@ -207,9 +286,17 @@ app.post('/cocktails', async (req, res) => {
 app.post(
 	"/signup",
 	passport.authenticate("local-signup", {
-		successRedirect: "/cocktails",
+		successRedirect: "/",
 
-		failureRedirect: "/ingredients",
+		failureRedirect: "/signup",
+	})
+);
+app.post(
+	"/signin",
+	passport.authenticate("local-signin", {
+		successRedirect: "/",
+
+		failureRedirect: "/signin",
 	})
 );
 

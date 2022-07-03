@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-    <nav id="navbar" class="navbar sticky-top navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="/home">BarJournal</a>
+    <nav id="navbar" class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">BarJournal</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">My Cocktails</a>
@@ -44,6 +44,11 @@
                     </div>
                 </li>
             </ul>
+            <ul class="navbar-nav ml-auto ">
+				<li class="nav-item ml-auto">
+                    <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>
+                </li>
+			</ul>
         </div>
     </nav>
     <div class="container-fluid">
@@ -62,16 +67,17 @@
                         <img width="50%" src="${cocktail.url}" alt="">
                     </div>
                     <div class="drink-specs">
-                        <div class="spirit"><strong>Spirit: </strong><span>${cocktail.spiritAmount}oz ${ingredients.find(ingredient => cocktail.spirit === ingredient.id).name}</span></div>
-                        <div class="citrus"><strong>Citrus: </strong><span>${cocktail.citrusAmount}oz ${ingredients.find(ingredient => cocktail.citrus === ingredient.id).name}</span></div>
-                        <div class="sweetener"><strong>Sweetener: </strong><span>${cocktail.sweetenerAmount}oz ${ingredients.find(ingredient => cocktail.sweetener === ingredient.id).name}</span></div>
-                        <div class="shake"><strong>Shake: </strong><span>${cocktail.shake}</span></div>
-                        <div class="drink-instructions">
+                        <div class="spirit my-2"><strong>Spirit: </strong><span>${cocktail.spiritAmount}oz ${ingredients.find(ingredient => cocktail.spirit === ingredient.id).name}</span></div>
+                        <div class="citrus mb-2"><strong>Citrus: </strong><span>${cocktail.citrusAmount}oz ${ingredients.find(ingredient => cocktail.citrus === ingredient.id).name}</span></div>
+                        <div class="sweetener mb-2"><strong>Sweetener: </strong><span>${cocktail.sweetenerAmount}oz ${ingredients.find(ingredient => cocktail.sweetener === ingredient.id).name}</span></div>
+                        <div class="shake mb-2"><strong>Shake: </strong><span>${cocktail.shake}</span></div>
+                        <div class="drink-instructions mb-4">
                             <div><strong>Instructions:</strong></div>
                             <p class="">${cocktail.description}</p>
                         </div>
-
-                        
+                    </div>
+                    <div class="created-by d-flex justify-content-end">
+                        <p>Created by ${users.find(user => cocktail.creatorId === user.id).name}</p>
                     </div>
                 </div>
                         `}).join('')}
