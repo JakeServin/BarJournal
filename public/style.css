@@ -1,8 +1,11 @@
 
 .main-screen {
     font-family: 'Roboto';
-    background-color: white;
-    height: 100vh;
+    background-color: whitesmoke;
+}
+
+html, body {
+    background-color: whitesmoke;
 }
  
 
@@ -11,11 +14,14 @@
     padding-bottom: 5%;
     display:flex;
     justify-content: center;
-    text-align: ;
+    background-color: whitesmoke;
+}
+#container, #login-container {
+    background-color: white;
+    border-radius: 5px;
 }
 #container {
-    background-color: whitesmoke;
-    border-radius: 5px;
+    border: .5px solid lightgrey;
 }
 
 #feed {
@@ -29,6 +35,7 @@
     border-radius:5px;
     margin-bottom: 5%;
     margin-top: 10%;
+    border: solid .5px lightgrey;
 }
 
 .drink-image {
