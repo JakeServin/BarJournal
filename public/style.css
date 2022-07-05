@@ -30,12 +30,17 @@ html, body {
     align-items: center;
     
 }
+
+#feed-content {
+    max-width: 625px;
+}
 .drink-wrapper {
     background-color: whitesmoke;
     border-radius:5px;
     margin-bottom: 5%;
     margin-top: 10%;
     border: solid .5px lightgrey;
+    max-width: 650px;
 }
 
 .drink-image {

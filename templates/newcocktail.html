@@ -25,7 +25,7 @@
 	</head>
 	<body>
 		<nav id="navbar" class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">BarBook</a>
+        <a class="navbar-brand" href="/">BarJournal</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -65,153 +65,152 @@
 				<div id="wrapper" class="row">
 					<div id="container" class="col-lg-6 p-3" >
 						<h1>Create New Cocktail</h1>
-						<div id="form" >
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<span
-									class="input-group-text"
-									id="inputGroup-sizing-default"
-									>Drink Name</span
-								>
-							</div>
-							<input
-								id="drink-name"
-								type="text"
-								class="form-control col"
-								aria-label="Default"
-								aria-describedby="inputGroup-sizing-default"
-							/>
-							<br>
-						</div>
-						<div id="name-error" class="text-danger m-3"></div>
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<span
-								class="input-group-text"
-								id="inputGroup-sizing-default"
-								>Image URL</span
-								>
-							</div>
-							<input
-							id="img-url"
-							type="text"
-							class="form-control"
-							aria-label="Default"
-							aria-describedby="inputGroup-sizing-default"
-							/>
-						</div>
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<label
-								class="input-group-text"
-								for="inputGroupSelect01"
-								>Spirit</label
-								>
-							</div>
-							<select class="custom-select" id="spirit">
-								<option  selected>Choose...</option>
-								${ ingredients.map(ingredient => { return `
-									<option value=${ingredient.id}>
-										${ingredient.name}
-									</option>
-									` }).join('') }
-								</select>
-								<input type="text" class="form-control"id="spirit-amount" />
-								<div class="input-group-append">
-									<span class="input-group-text" id="basic-addon2"
-									>oz</span
+						<div id="form" style="display:" >
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span
+										class="input-group-text"
+										id="inputGroup-sizing-default"
+										>Drink Name</span
 									>
 								</div>
+								<input
+									id="drink-name"
+									type="text"
+									class="form-control col"
+									aria-label="Default"
+									aria-describedby="inputGroup-sizing-default"
+								/>
+								<br>
 							</div>
-							<div id="spirit-error" class="text-danger m-3"></div>
+							<div id="name-error" class="text-danger m-3"></div>
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span
+									class="input-group-text"
+									id="inputGroup-sizing-default"
+									>Image URL</span
+									>
+								</div>
+								<input
+								id="img-url"
+								type="text"
+								class="form-control"
+								aria-label="Default"
+								aria-describedby="inputGroup-sizing-default"
+								/>
+							</div>
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<label
 									class="input-group-text"
 									for="inputGroupSelect01"
-									>Citrus</label
-								>
+									>Spirit</label
+									>
+								</div>
+								<select class="custom-select" id="spirit">
+									<option  selected>Choose...</option>
+									${ ingredients.map(ingredient => { return `
+										<option value=${ingredient.id}>
+											${ingredient.name}
+										</option>
+										` }).join('') }
+									</select>
+									<input type="text" class="form-control"id="spirit-amount" />
+									<div class="input-group-append">
+										<span class="input-group-text" id="basic-addon2"
+										>oz</span
+										>
+									</div>
+								</div>
+								<div id="spirit-error" class="text-danger m-3"></div>
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<label
+										class="input-group-text"
+										for="inputGroupSelect01"
+										>Citrus</label
+									>
+								</div>
+								<select class="custom-select" id="citrus">
+									<option selected>Choose...</option>
+									${ ingredients.map(ingredient => { return `
+									<option value=${ingredient.id}>
+										${ingredient.name}
+									</option>` }).join('') }
+								</select>
+								<input type="text" class="form-control" id="citrus-amount" />
+								<div class="input-group-append">
+									<span class="input-group-text" id="basic-addon2"
+										>oz</span
+									>
+								</div>
 							</div>
-							<select class="custom-select" id="citrus">
-								<option selected>Choose...</option>
-								${ ingredients.map(ingredient => { return `
-								<option value=${ingredient.id}>
-									${ingredient.name}
-								</option>
-								` }).join('') }
-							</select>
-							<input type="text" class="form-control" id="citrus-amount" />
-							<div class="input-group-append">
-								<span class="input-group-text" id="basic-addon2"
-									>oz</span
-								>
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<label
+										class="input-group-text"
+										for="inputGroupSelect01"
+										>Sweetener</label
+									>
+								</div>
+								<select class="custom-select" id="sweetener">
+									<option selected>Choose...</option>
+									${ ingredients.map(ingredient => { return `
+									<option value=${ingredient.id}>
+										${ingredient.name}
+									</option>` }).join('') }
+								</select>
+								<input type="text" class="form-control" id="sweetener-amount"/>
+								<div class="input-group-append">
+									<span class="input-group-text" id="basic-addon2"
+										>oz</span
+									>
+								</div>
 							</div>
-						</div>
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<label
-									class="input-group-text"
-									for="inputGroupSelect01"
-									>Sweetener</label
-								>
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<label
+										class="input-group-text"
+										for="inputGroupSelect01"
+										>Shake</label
+									>
+								</div>
+								<select class="custom-select" id="shake">
+									<option selected>Choose...</option>
+									<option value="Hard Shake">Hard Shake</option>
+									<option value="Quick Shake">Quick Shake</option>
+									<option value="Whip Shake">Whip Shake</option>
+									<option value="Stirred">Stirred</option>
+								</select>
 							</div>
-							<select class="custom-select" id="sweetener">
-								<option selected>Choose...</option>
-								${ ingredients.map(ingredient => { return `
-								<option value=${ingredient.id}>
-									${ingredient.name}
-								</option>
-								` }).join('') }
-							</select>
-							<input type="text" class="form-control" id="sweetener-amount"/>
-							<div class="input-group-append">
-								<span class="input-group-text" id="basic-addon2"
-									>oz</span
+							<div class="form-group">
+								<label for="description"
+									>Description</label
 								>
+								<textarea
+									class="form-control"
+									id="description"
+									rows="3"
+								></textarea>
 							</div>
-						</div>
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<label
-									class="input-group-text"
-									for="inputGroupSelect01"
-									>Shake</label
-								>
-							</div>
-							<select class="custom-select" id="shake">
-								<option value=null selected>Choose...</option>
-								<option value="Hard Shake">Hard Shake</option>
-								<option value="Quick Shake">Quick Shake</option>
-								<option value="Whip Shake">Whip Shake</option>
-								<option value="Stirred">Stirred</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="description"
-								>Description</label
+							<div id="description-error" class="text-danger m-3"></div>
+							<a
+								href="/new-ingredient"
+								role="button"
+								class="btn-primary btn btn-block"
 							>
-							<textarea
-								class="form-control"
-								id="description"
-								rows="3"
-							></textarea>
-						</div>
-						<div id="description-error" class="text-danger m-3"></div>
-						<a
-							href="/new-ingredient"
-							role="button"
-							class="btn-primary btn btn-block"
-						>
-							Click to add new Ingredient
-						</a>
+								Click to add new Ingredient
+							</a>
 
-						<button
-							id="submit-btn"
-							class="btn-success btn btn-block"
-						>
-							Submit
-						</button>
-						</div>
+							<button
+								id="submit-btn"
+								class="btn-success btn btn-block"
+							>
+								Submit
+							</button>
+							</div>
+
 						<div id="success" class="m-4 ml-5" style="display:none">
 							<p class="text-success">Drink added successfully!</p>
 						</div>
@@ -278,10 +277,10 @@
 					console.log("INVALID ENTRY");
 				}
 				
-
-				await axios.post("/cocktails", newCocktail)
 				document.getElementById('form').style.display ='none';
 				document.getElementById('success').style.display ='';
+				await axios.post("/cocktails", newCocktail)
+				
 
 				}
 				

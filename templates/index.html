@@ -60,24 +60,24 @@
                 ${
                     cocktails.reverse().map((cocktail)=>{
                         return `<div class="drink-wrapper col p-3">
-                    <div class="drink-title">
+                    <div class="drink-title mb-3">
                     <h3>${cocktail.name}</h3>
                     </div>
-                    <div class="drink-image">
-                        <img width="50%" src="${cocktail.url}" alt="">
+                    <div class="drink-image mt-1 mb-3">
+                        <img width="70%" src="${cocktail.url}" alt="">
                     </div>
                     <div class="drink-specs">
                         <div class="spirit my-2"><strong>Spirit: </strong><span>${cocktail.spiritAmount}oz ${ingredients.find(ingredient => cocktail.spirit === ingredient.id).name}</span></div>
                         <div class="citrus mb-2"><strong>Citrus: </strong><span>${cocktail.citrusAmount}oz ${ingredients.find(ingredient => cocktail.citrus === ingredient.id).name}</span></div>
                         <div class="sweetener mb-2"><strong>Sweetener: </strong><span>${cocktail.sweetenerAmount}oz ${ingredients.find(ingredient => cocktail.sweetener === ingredient.id).name}</span></div>
                         <div class="shake mb-2"><strong>Shake: </strong><span>${cocktail.shake}</span></div>
-                        <div class="drink-instructions mb-4">
+                        <div class="drink-instructions mb-3">
                             <div><strong>Instructions:</strong></div>
-                            <p class="">${cocktail.description}</p>
+                            <p class="mt-1">${cocktail.description}</p>
                         </div>
                     </div>
-                    <div class="created-by d-flex justify-content-end">
-                        <p>Created by ${users.find(user => cocktail.creatorId === user.id).name}</p>
+                    <div class="created-by d-flex justify-content-end mx-1">
+                        <p>Created by <a href="#">${users.find(user => cocktail.creatorId === user.id).name}</a></p>
                     </div>
                 </div>
                         `}).join('')}
