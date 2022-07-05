@@ -179,7 +179,12 @@ app.set('views', 'templates'); // The templates folder is where our "views" will
 app.set('view engine', 'html'); // the engine we set up on line 15 will be used here. 
 
 
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated())
+        return next();
 
+	res.redirect("/signin");
+}
 
 // ROUTING
 /* Get Routes */
@@ -207,19 +212,19 @@ app.get('/',function isLoggedIn(req, res, next) {
         }
     })
 })
-app.get('/new-cocktail', async (req, res) => {
-    const ingredients = await Ingredient.findAll({ raw: true });
-    const cocktails = await Cocktail.findAll({ raw: true });
-    res.render('newcocktail', {
-        locals: {
-            ingredients: ingredients,
-            cocktails: cocktails
-        }
-    })
-})
-app.get('/new-ingredient', async (req, res) => {
-    res.render('newingredient')
-})
+app.get("/new-cocktail", isLoggedIn, async (req, res) => {
+	const ingredients = await Ingredient.findAll({ raw: true });
+	const cocktails = await Cocktail.findAll({ raw: true });
+	res.render("newcocktail", {
+		locals: {
+			ingredients: ingredients,
+			cocktails: cocktails,
+		},
+	});
+});
+app.get("/new-ingredient", isLoggedIn, async (req, res) => {
+	res.render("newingredient");
+});
 
 app.get('/users', async (req, res) => {
     const users = await User.findAll();
@@ -264,8 +269,8 @@ app.post('/users', async (req, res) => {
     res.json(newUser);
 })
 app.post('/cocktails', async (req, res) => {
-    const { name, spirit, citrus, sweetener, shake, description, url, spiritAmount, citrusAmount, sweetenerAmount } = req.body;
-    console.log(req.user)
+    let { name, spirit, citrus, sweetener, shake, description, url, spiritAmount, citrusAmount, sweetenerAmount } = req.body;
+    console.log(req.body);
     const creatorId = req.user.id
     const newCocktail = await Cocktail.create({
         name,
@@ -280,7 +285,6 @@ app.post('/cocktails', async (req, res) => {
         citrusAmount,
         sweetenerAmount
     })
-    res.json(newCocktail);
 })
 
 app.post(
