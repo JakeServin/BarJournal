@@ -1,6 +1,11 @@
+*{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Merriweather', serif;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Flex', sans-serif;
+}
 
 .main-screen {
-    font-family: 'Roboto';
     background-color: whitesmoke;
 }
 
@@ -54,3 +59,4 @@ html, body {
 .text-success {
     font-size: 1.5rem;
 }
+
