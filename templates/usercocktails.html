@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link
-			href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap"
 			rel="stylesheet"
 		/>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/style.css" />
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -23,11 +23,12 @@
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/${userInfo.id}">My Cocktails</a>
+                <li class="nav-item ${activeFlag}">
+                    <a class="nav-link" 
+                        href="/users/${userInfo.id}">My Cocktails</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New</a>
@@ -53,34 +54,35 @@
     </nav>
     <div class="container-fluid">
         <div class="row position-fixed">
-            <div class="feed-title my-3 mx-4 "><h2>New Cocktails</h2></div>
+            <div class="feed-title my-3 mx-4 "><h2>${creatorInfo.name}'s <br>Cocktails</h2></div>
         </div>
         <div id="feed" class="row">
             <div id="feed-content" class="col-7">
                 ${
-                    cocktails.reverse().map((cocktail)=>{
+                    userCocktails.reverse().map((userCocktail)=>{
                         return `<div class="drink-wrapper col p-3">
                     <div class="drink-title mb-3">
-                    <h3>${cocktail.name}</h3>
+                    <h3>${userCocktail.name}</h3>
                     </div>
                     <div class="drink-image mt-1 mb-3">
-                        <img width="70%" src="${cocktail.url}" alt="">
+                        <img width="70%" src="${userCocktail.url}" alt="">
                     </div>
                     <div class="drink-specs">
-                        <div class="spirit my-2"><strong>Spirit: </strong><span>${cocktail.spiritAmount}oz ${ingredients.find(ingredient => cocktail.spirit === ingredient.id).name}</span></div>
-                        <div class="citrus mb-2"><strong>Citrus: </strong><span>${cocktail.citrusAmount}oz ${ingredients.find(ingredient => cocktail.citrus === ingredient.id).name}</span></div>
-                        <div class="sweetener mb-2"><strong>Sweetener: </strong><span>${cocktail.sweetenerAmount}oz ${ingredients.find(ingredient => cocktail.sweetener === ingredient.id).name}</span></div>
-                        <div class="shake mb-2"><strong>Shake: </strong><span>${cocktail.shake}</span></div>
+                        <div class="spirit my-2"><strong>Spirit: </strong><span>${userCocktail.spiritAmount}oz ${ingredients.find(ingredient => userCocktail.spirit === ingredient.id).name}</span></div>
+                        <div class="citrus mb-2"><strong>Citrus: </strong><span>${userCocktail.citrusAmount}oz ${ingredients.find(ingredient => userCocktail.citrus === ingredient.id).name}</span></div>
+                        <div class="sweetener mb-2"><strong>Sweetener: </strong><span>${userCocktail.sweetenerAmount}oz ${ingredients.find(ingredient => userCocktail.sweetener === ingredient.id).name}</span></div>
+                        <div class="shake mb-2"><strong>Shake: </strong><span>${userCocktail.shake}</span></div>
                         <div class="drink-instructions mb-3">
                             <div><strong>Instructions:</strong></div>
-                            <p class="mt-1">${cocktail.description}</p>
+                            <p class="mt-1">${userCocktail.description}</p>
                         </div>
                     </div>
                     <div class="created-by d-flex justify-content-end mx-1">
-                        <p>Created by <a href="/users/${cocktail.creatorId}">${users.find(user => cocktail.creatorId === user.id).name}</a></p>
+                        <p>Created by <a href="#">${users.find(user => userCocktail.creatorId === user.id).name}</a></p>
                     </div>
                 </div>
                         `}).join('')}
+                
                 
             </div>
         </div>

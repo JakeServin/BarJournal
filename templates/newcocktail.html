@@ -109,7 +109,7 @@
 									>
 								</div>
 								<select class="custom-select" id="spirit">
-									<option  selected>Choose...</option>
+									<option value=NULL  selected>Choose...</option>
 									${ ingredients.map(ingredient => { return `
 										<option value=${ingredient.id}>
 											${ingredient.name}
@@ -133,7 +133,7 @@
 									>
 								</div>
 								<select class="custom-select" id="citrus">
-									<option selected>Choose...</option>
+									<option value=NULL selected>Choose...</option>
 									${ ingredients.map(ingredient => { return `
 									<option value=${ingredient.id}>
 										${ingredient.name}
@@ -155,7 +155,7 @@
 									>
 								</div>
 								<select class="custom-select" id="sweetener">
-									<option selected>Choose...</option>
+									<option value=NULL selected>Choose...</option>
 									${ ingredients.map(ingredient => { return `
 									<option value=${ingredient.id}>
 										${ingredient.name}
@@ -177,7 +177,7 @@
 									>
 								</div>
 								<select class="custom-select" id="shake">
-									<option selected>Choose...</option>
+									<option value=NULL selected>Choose...</option>
 									<option value="Hard Shake">Hard Shake</option>
 									<option value="Quick Shake">Quick Shake</option>
 									<option value="Whip Shake">Whip Shake</option>
@@ -227,15 +227,26 @@
 				document.getElementById('name-error').innerText = '';
 				document.getElementById('spirit-error').innerText = '';
 				document.getElementById('description-error').innerText = '';
-				
+				let citrus = null;
+				let sweetener = null;
+				let shake = null;
+				if (document.getElementById("citrus").value != "NULL") {
+					citrus = document.getElementById("citrus").value
+				}
+				if (document.getElementById("sweetener").value != "NULL") {
+					sweetener = document.getElementById("sweetener").value
+				}
+				if (document.getElementById("shake").value != 'NULL') {
+					shake = document.getElementById("sweetener").value
+				}
 
 				// Get details from form
 				const newCocktail = {
 					name: document.getElementById("drink-name").value,
 					spirit: document.getElementById("spirit").value,
-					citrus: document.getElementById("citrus").value,
-					sweetener: document.getElementById("sweetener").value,
-					shake: document.getElementById("shake").value,
+					citrus: citrus,
+					sweetener: sweetener,
+					shake: shake,
 					description: document.getElementById('description').value,
 					url: document.getElementById('img-url').value,
 					spiritAmount: document.getElementById("spirit-amount").value,
@@ -275,6 +286,7 @@
 				// Don't post data if required fields are empty
 				if (newCocktail.name == '' || newCocktail.spirit== '' || newCocktail.description== '' || newCocktail.spiritAmount== '') {
 					console.log("INVALID ENTRY");
+					return;
 				}
 				
 				document.getElementById('form').style.display ='none';
