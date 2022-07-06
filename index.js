@@ -17,18 +17,16 @@ app.use (
   session ({secret: 'keyboard cat', resave: true, saveUninitialized: true})
 ); // session secret
 
+// Passport setup
 app.use (passport.initialize ());
-
 app.use (passport.session ());
 app.use ((err, req, res, next) => {
   console.error (err.stack);
   res.status (500).send ('Something broke!');
 });
-
 passport.serializeUser (function (user, done) {
   done (null, user.id);
 });
-
 passport.deserializeUser (function (id, done) {
   User.findByPk (id).then (function (user) {
     if (user) {
@@ -38,7 +36,6 @@ passport.deserializeUser (function (id, done) {
     }
   });
 });
-
 passport.use (
   'local-signin',
   new LocalStrategy (
@@ -122,11 +119,13 @@ passport.use (
     }
   )
 );
+
 // express-es6-template-engine set up
 app.engine ('html', es6Renderer); // Registers HTML as the engine (this is what type of view will be rendering. )
 app.set ('views', 'templates'); // The templates folder is where our "views" will be located.
 app.set ('view engine', 'html'); // the engine we set up on line 15 will be used here.
 
+// Function to redirect user to login page if not logged in
 function isLoggedIn (req, res, next) {
   if (req.isAuthenticated ()) return next ();
 
@@ -331,7 +330,6 @@ app.post ('/cocktails', async (req, res) => {
   });
     console.log(newCocktail);
 });
-
 app.post (
   '/signup',
   passport.authenticate ('local-signup', {
@@ -348,5 +346,4 @@ app.post (
     failureRedirect: '/signin',
   })
 );
-
 app.listen (PORT, console.log (`Server is listening on port: ${PORT}`));
