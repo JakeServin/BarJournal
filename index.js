@@ -136,46 +136,85 @@ function isLoggedIn (req, res, next) {
 // ROUTING
 /* Get Routes */
 
-app.get ('/', isLoggedIn, async (req, res) => {
+app.get ('/', async (req, res) => {
   const cocktails = await Cocktail.findAll ({raw: true});
   const ingredients = await Ingredient.findAll ({raw: true});
-  const users = await User.findAll ({raw: true});
-  const userInfo = await User.findOne({
-		raw: true,
-		where: {
-			id: req.user.id
-		},
-		attributes: {
-			exclude: ["password"],
-		},
-  });
-  res.render ('index', {
+    const users = await User.findAll({ raw: true });
+  res.render ('home', {
     locals: {
       cocktails: cocktails,
       users: users,
           ingredients: ingredients,
-      userInfo: userInfo
     },
     partials: {
       navbar: './templates/partials/nav.html',
     },
   });
   console.log(userInfo)
-});
+}); 
+app.get ('/dashboard', isLoggedIn, async (req, res) => {
+  const cocktails = await Cocktail.findAll ({raw: true});
+  const ingredients = await Ingredient.findAll ({raw: true});
+    const users = await User.findAll({ raw: true });
+    const userInfo = await User.findOne({
+		raw: true,
+		where: {
+			id: req.user.id,
+		},
+		attributes: {
+			exclude: ["password"],
+		},
+	});
+  res.render ('dashboard', {
+    locals: {
+      cocktails: cocktails,
+      users: users,
+          ingredients: ingredients,
+        userInfo:userInfo
+    },
+    partials: {
+      navbar: './templates/partials/nav.html',
+    },
+  });
+  console.log(userInfo)
+}); 
 app.get ('/new-cocktail', isLoggedIn, async (req, res) => {
   const ingredients = await Ingredient.findAll ({raw: true});
   const cocktails = await Cocktail.findAll ({raw: true});
+  const userInfo = await User.findOne({
+		raw: true,
+		where: {
+			id: req.user.id,
+		},
+		attributes: {
+			exclude: ["password"],
+		},
+  });
   res.render ('newcocktail', {
     locals: {
       ingredients: ingredients,
       cocktails: cocktails,
+      userInfo: userInfo
     },
   });
 });
-app.get ('/new-ingredient', isLoggedIn, async (req, res) => {
-  res.render ('newingredient');
+app.get('/new-ingredient', isLoggedIn, async (req, res) => {
+    const userInfo = await User.findOne({
+		raw: true,
+		where: {
+			id: req.user.id,
+		},
+		attributes: {
+			exclude: ["password"],
+		},
+	});
+    res.render('newingredient', {
+        locals: {
+            userInfo: userInfo
+      }
+  });
 });
-app.get ('/users/:creatorId', async (req, res) => {
+app.get ('/users/:creatorId', isLoggedIn, async (req, res) => {
   const ingredients = await Ingredient.findAll ({raw: true});
   const users = await User.findAll ({raw: true});
   const userCocktails = await Cocktail.findAll ({
@@ -296,7 +335,7 @@ app.post ('/cocktails', async (req, res) => {
 app.post (
   '/signup',
   passport.authenticate ('local-signup', {
-    successRedirect: '/',
+    successRedirect: '/dashboard',
 
     failureRedirect: '/signup',
   })
@@ -304,7 +343,7 @@ app.post (
 app.post (
   '/signin',
   passport.authenticate ('local-signin', {
-    successRedirect: '/',
+    successRedirect: '/dashboard',
 
     failureRedirect: '/signin',
   })

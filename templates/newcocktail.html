@@ -25,7 +25,7 @@
 	</head>
 	<body>
 		<nav id="navbar" class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">BarJournal</a>
+        <a class="navbar-brand" href="/dashboard">BarJournal</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -33,10 +33,10 @@
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">My Cocktails</a>
+                    <a class="nav-link" href="/users/${userInfo.id}">My Cocktails</a>
                 </li>
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New</a>
@@ -65,7 +65,7 @@
 				<div id="wrapper" class="row">
 					<div id="container" class="col-lg-6 p-3" >
 						<h1>Create New Cocktail</h1>
-						<div id="form" style="display:" >
+						<form id="form">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<span
@@ -80,6 +80,7 @@
 									class="form-control col"
 									aria-label="Default"
 									aria-describedby="inputGroup-sizing-default"
+									required
 								/>
 								<br>
 							</div>
@@ -108,15 +109,15 @@
 									>Spirit</label
 									>
 								</div>
-								<select class="custom-select" id="spirit">
-									<option value=NULL  selected>Choose...</option>
+								<select class="custom-select" id="spirit" required="required">
+									<option value=''  selected>Choose...</option>
 									${ ingredients.map(ingredient => { return `
 										<option value=${ingredient.id}>
 											${ingredient.name}
 										</option>
 										` }).join('') }
 									</select>
-									<input type="text" class="form-control"id="spirit-amount" />
+									<input type="text" class="form-control"id="spirit-amount" required/>
 									<div class="input-group-append">
 										<span class="input-group-text" id="basic-addon2"
 										>oz</span
@@ -133,7 +134,7 @@
 									>
 								</div>
 								<select class="custom-select" id="citrus">
-									<option value=NULL selected>Choose...</option>
+									<option value='' selected>Choose...</option>
 									${ ingredients.map(ingredient => { return `
 									<option value=${ingredient.id}>
 										${ingredient.name}
@@ -155,7 +156,7 @@
 									>
 								</div>
 								<select class="custom-select" id="sweetener">
-									<option value=NULL selected>Choose...</option>
+									<option value='' selected>Choose...</option>
 									${ ingredients.map(ingredient => { return `
 									<option value=${ingredient.id}>
 										${ingredient.name}
@@ -177,7 +178,7 @@
 									>
 								</div>
 								<select class="custom-select" id="shake">
-									<option value=NULL selected>Choose...</option>
+									<option value='' selected>Choose...</option>
 									<option value="Hard Shake">Hard Shake</option>
 									<option value="Quick Shake">Quick Shake</option>
 									<option value="Whip Shake">Whip Shake</option>
@@ -192,6 +193,7 @@
 									class="form-control"
 									id="description"
 									rows="3"
+									required
 								></textarea>
 							</div>
 							<div id="description-error" class="text-danger m-3"></div>
@@ -209,7 +211,7 @@
 							>
 								Submit
 							</button>
-							</div>
+							</form>
 
 						<div id="success" class="m-4 ml-5" style="display:none">
 							<p class="text-success">Drink added successfully!</p>
@@ -222,22 +224,25 @@
 		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<script>
 			const submit = document.getElementById("submit-btn");
-			submit.addEventListener("click", async () => {
+			submit.addEventListener("click", async (e) => {
 				// Reset error messages
 				document.getElementById('name-error').innerText = '';
-				document.getElementById('spirit-error').innerText = '';
-				document.getElementById('description-error').innerText = '';
+				e.preventDefault();
+				let isValid  = document.getElementById('form').reportValidity();
+				if (!isValid) {
+					return
+				}
 				let citrus = null;
 				let sweetener = null;
 				let shake = null;
-				if (document.getElementById("citrus").value != "NULL") {
+				if (document.getElementById("citrus").value != "") {
 					citrus = document.getElementById("citrus").value
 				}
-				if (document.getElementById("sweetener").value != "NULL") {
+				if (document.getElementById("sweetener").value != "") {
 					sweetener = document.getElementById("sweetener").value
 				}
-				if (document.getElementById("shake").value != 'NULL') {
-					shake = document.getElementById("sweetener").value
+				if (document.getElementById("shake").value != '') {
+					shake = document.getElementById("shake").value
 				}
 
 				// Get details from form
@@ -267,27 +272,7 @@
 					document.getElementById('name-error').innerText = 'A cocktail already exists under this name!'
 					return ;
 				} else {
-				
-				// Check if name field is filled out
-				if (!newCocktail.name ) {
-					document.getElementById('name-error').innerText = 'This field must be filled out';
-				}
-				
-				// Check if spirit field is filled out
-				if (!newCocktail.spirit || !newCocktail.spiritAmount ) {
-					document.getElementById('spirit-error').innerText = 'This field must be filled out';
-				}
-
-				// Check if description is filled out
-				if (!newCocktail.description ) {
-					document.getElementById('description-error').innerText = 'This field must be filled out';
-				}
-
-				// Don't post data if required fields are empty
-				if (newCocktail.name == '' || newCocktail.spirit== '' || newCocktail.description== '' || newCocktail.spiritAmount== '') {
-					console.log("INVALID ENTRY");
-					return;
-				}
+			
 				
 				document.getElementById('form').style.display ='none';
 				document.getElementById('success').style.display ='';
