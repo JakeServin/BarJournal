@@ -52,6 +52,21 @@ module.exports = {
 					as: "creatorId",
 				},
 			},
+			description: {
+				type: Sequelize.STRING,
+			},
+			url: {
+				type: Sequelize.STRING,
+			},
+			spiritAmount: {
+				type: Sequelize.STRING,
+			},
+			citrusAmount: {
+				type: Sequelize.STRING,
+			},
+			sweetenerAmount: {
+				type: Sequelize.STRING,
+			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,
