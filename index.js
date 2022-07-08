@@ -2,7 +2,7 @@
 const es6Renderer = require ('express-es6-template-engine');
 const express = require ('express');
 const app = express ();
-const PORT = 4000;
+const PORT = process.env.PORT || 3000;
 const {User, Cocktail, Ingredient} = require ('./models');
 const LocalStrategy = require ('passport-local').Strategy;
 const passport = require ('passport');
