@@ -5,10 +5,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link
-			href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
-			rel="stylesheet"
-		/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Merriweather:wght@300;400;700;900&family=Roboto+Flex:opsz@8..144&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
     
     <!-- Bootstrap CSS -->
@@ -16,7 +15,7 @@
   </head>
   <body>
     <nav id="navbar" class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
-        <a class="navbar-brand" href="/dashboard">BarJournal🍹</a>
+        <a class="navbar-brand" href="/dashboard">BarJournal</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -52,11 +51,11 @@
         </div>
     </nav>
     <div class="container-fluid">
-        <div class="row position-fixed">
-            <div class="feed-title my-3 mx-4 "><h2>New Cocktails</h2></div>
+        <div class="home-title row">
+            <div class="feed-title mx-4 col-md-7"><h2>New Cocktails</h2></div>
         </div>
         <div id="feed" class="row">
-            <div id="feed-content" class="col-7">
+            <div id="feed-content" class="col-md-7">
                 ${
                     cocktails.reverse().map((cocktail)=>{
                         return `<div class="drink-wrapper col p-3">
@@ -64,7 +63,7 @@
                     <h3>${cocktail.name}</h3>
                     </div>
                     <div class="drink-image mt-1 mb-3">
-                        <img width="70%" src="${cocktail.url}" alt="">
+                        <img src="${cocktail.url}" alt="cocktail image">
                     </div>
                     <div class="drink-specs">
                         <div class="spirit my-2"><strong>Spirit: </strong><span>${cocktail.spiritAmount}oz ${ingredients.find(ingredient => cocktail.spirit === ingredient.id).name}</span></div>

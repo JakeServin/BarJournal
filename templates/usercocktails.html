@@ -53,11 +53,11 @@
         </div>
     </nav>
     <div class="container-fluid">
-        <div class="row position-fixed">
-            <div class="feed-title my-3 mx-4 "><h2>${creatorInfo.name}'s <br>Cocktails</h2></div>
+        <div class="home-title row">
+            <div class="feed-title mx-4 col-md-7 "><h2>${creatorInfo.name}'s <br>Cocktails</h2></div>
         </div>
         <div id="feed" class="row">
-            <div id="feed-content" class="col-7">
+            <div id="feed-content" class="col-md-7">
                 ${
                     userCocktails.reverse().map((userCocktail)=>{
                         return `<div class="drink-wrapper col p-3">

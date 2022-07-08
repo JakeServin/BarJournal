@@ -7,7 +7,7 @@ const {User, Cocktail, Ingredient} = require ('./models');
 const LocalStrategy = require ('passport-local').Strategy;
 const passport = require ('passport');
 const session = require ('express-session');
-const bCrypt = require ('bcrypt-nodejs');
+const bCrypt = require('bcrypt-nodejs');
 
 // Middleware
 app.use (express.static (__dirname + '/public'));

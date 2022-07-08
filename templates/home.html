@@ -46,18 +46,18 @@
             </ul>
             <ul class="navbar-nav ml-auto ">
 				<li class="nav-item ml-auto d-flex">
-                    <a class="nav-link" href="/signin">Login</a> 
+                    <a class="nav-link mr-2 mr-md-1 " href="/signin">Login</a> 
                     <a class="nav-link" href="/signup">Signup<span class="sr-only">(current)</span></a>
                 </li>
 			</ul>
         </div>
     </nav>
     <div class="container-fluid">
-        <div class="row position-fixed">
-            <div class="feed-title my-3 mx-4 "><h2>New Cocktails</h2></div>
+        <div class="home-title row">
+            <div class="feed-title mx-4 "><h2>New Cocktails</h2></div>
         </div>
         <div id="feed" class="row">
-            <div id="feed-content" class="col-7">
+            <div id="feed-content" class="col-md-7">
                 ${
                     cocktails.reverse().map((cocktail)=>{
                         return `<div class="drink-wrapper col p-3">
@@ -65,7 +65,7 @@
                     <h3>${cocktail.name}</h3>
                     </div>
                     <div class="drink-image mt-1 mb-3">
-                        <img width="70%" src="${cocktail.url}" alt="">
+                        <img src="${cocktail.url}" alt="">
                     </div>
                     <div class="drink-specs">
                         <div class="spirit my-2"><strong>Spirit: </strong><span>${cocktail.spiritAmount}oz ${ingredients.find(ingredient => cocktail.spirit === ingredient.id).name}</span></div>

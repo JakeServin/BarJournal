@@ -1,8 +1,5 @@
 *{
-    font-family: 'Lato', sans-serif;
-    font-family: 'Merriweather', serif;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Roboto Flex', sans-serif;
+    font-family: 'Roboto flex', sans-serif;
 }
 
 .main-screen {
@@ -12,8 +9,14 @@
 html, body {
     background-color: whitesmoke;
 }
- 
 
+img {
+    width:100%
+}
+
+.home-title {
+    position: fixed;
+}
 #wrapper {
     padding-top: 5%;
     padding-bottom: 5%;
@@ -39,6 +42,10 @@ html, body {
 #feed-content {
     max-width: 625px;
 }
+.feed-title {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
 .drink-wrapper {
     background-color: whitesmoke;
     border-radius:5px;
@@ -46,6 +53,9 @@ html, body {
     margin-top: 10%;
     border: solid .5px lightgrey;
     max-width: 650px;
+    font-family: 'Merriweather', serif;
+
+
 }
 
 .drink-image {
@@ -58,5 +68,24 @@ html, body {
 
 .text-success {
     font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .home-title {
+        position: static;
+        width: 100vw;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: center;
+        background-color: white;
+        text-align: center;
+    }
+    .feed-title {
+        margin-bottom: 0;
+        margin-top: .7rem;
+    }
+    .drink-wrapper:first-child {
+        margin-top: 0;
+    }
 }
 
