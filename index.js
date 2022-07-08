@@ -149,7 +149,6 @@ app.get ('/', async (req, res) => {
       navbar: './templates/partials/nav.html',
     },
   });
-  console.log(userInfo)
 }); 
 app.get ('/dashboard', isLoggedIn, async (req, res) => {
   const cocktails = await Cocktail.findAll ({raw: true});
