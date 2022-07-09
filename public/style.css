@@ -1,5 +1,6 @@
-*{
-    font-family: 'Roboto flex', sans-serif;
+#main {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
 }
 
 .main-screen {
@@ -8,6 +9,7 @@
 
 html, body {
     background-color: whitesmoke;
+    font-family: 'Roboto Flex', sans-serif;
 }
 
 img {
@@ -39,12 +41,19 @@ img {
     
 }
 
+
 #feed-content {
     max-width: 625px;
 }
 .feed-title {
     margin-top: 1rem;
     margin-bottom: 1rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
+}
+.feed-title> h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
 }
 .drink-wrapper {
     background-color: whitesmoke;
@@ -53,11 +62,21 @@ img {
     margin-top: 10%;
     border: solid .5px lightgrey;
     max-width: 650px;
-    font-family: 'Merriweather', serif;
+
 
 
 }
+.drink-title > h3{
+    font-weight: 400;
+}
 
+strong {
+    font-weight: 600;
+}
+p {
+    font-family: 'Roboto Slab', serif ;
+    font-weight: 300;
+}
 .drink-image {
     text-align: center;
 }
@@ -68,6 +87,9 @@ img {
 
 .text-success {
     font-size: 1.5rem;
+}
+.created-by > *{
+    font-family: 'roboto flex', sans-serif;
 }
 
 @media (max-width: 768px) {
