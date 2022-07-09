@@ -91,6 +91,10 @@ p {
     font-family: 'roboto flex', sans-serif;
 }
 
+#success-message {
+    font-weight: bolder;
+}
+
 @media (max-width: 768px) {
     .home-title {
         position: static;
