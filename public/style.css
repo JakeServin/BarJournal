@@ -1,4 +1,4 @@
-#main {
+body > * {
     font-family: 'Roboto', sans-serif;
     font-weight: 200;
 }
@@ -9,7 +9,6 @@
 
 html, body {
     background-color: whitesmoke;
-    font-family: 'Roboto Flex', sans-serif;
 }
 
 img {
