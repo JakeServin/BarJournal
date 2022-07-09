@@ -131,11 +131,16 @@ function isLoggedIn (req, res, next) {
 
   res.redirect ('/signin');
 }
+function backToDash(req, res, next) {
+  if (!req.isAuthenticated ()) return next ();
+
+  res.redirect ('/dashboard');
+}
 
 // ROUTING
 /* Get Routes */
 
-app.get ('/', async (req, res) => {
+app.get ('/', backToDash, async (req, res) => {
   const cocktails = await Cocktail.findAll ({raw: true});
   const ingredients = await Ingredient.findAll ({raw: true});
     const users = await User.findAll({ raw: true });
