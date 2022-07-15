@@ -1,6 +1,6 @@
 # BarJournal
 
-<img src="" alt="barjournalMockup" width="300"/>
+<img src="images/barjournalMockup.PNG" alt="barjournalMockup" width="300"/>
 
 ## Overview:
 
